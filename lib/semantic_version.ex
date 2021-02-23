@@ -64,4 +64,22 @@ defmodule SemanticVersion do
         {:error, reason}
     end
   end
+
+  @doc """
+  Convert SemanticVersion.t() into string.
+  """
+  @spec format(t()) :: binary()
+  def format(semver)
+
+  def format({major, minor, patch, nil, nil}) do
+    "#{major}.#{minor}.#{patch}"
+  end
+
+  def format({major, minor, patch, pre_release, nil}) do
+    format({major, minor, patch, nil, nil}) <> "-#{pre_release}"
+  end
+
+  def format({major, minor, patch, pre_release, build_metadata}) do
+    format({major, minor, patch, pre_release, nil}) <> "+#{build_metadata}"
+  end
 end

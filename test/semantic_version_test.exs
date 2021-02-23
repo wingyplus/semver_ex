@@ -31,4 +31,12 @@ defmodule SemanticVersionTest do
     assert SemanticVersion.parse("1.0.0-beta+exp.sha.5114f85") ==
              {:ok, {1, 0, 0, "beta", "exp.sha.5114f85"}}
   end
+
+  test "format/1" do
+    assert SemanticVersion.format({1, 0, 0, nil, nil}) == "1.0.0"
+    assert SemanticVersion.format({1, 1, 0, nil, nil}) == "1.1.0"
+    assert SemanticVersion.format({1, 1, 1, nil, nil}) == "1.1.1"
+    assert SemanticVersion.format({1, 0, 0, "beta", nil}) == "1.0.0-beta"
+    assert SemanticVersion.format({1, 0, 0, "beta", "sha.5114f85"}) == "1.0.0-beta+sha.5114f85"
+  end
 end
